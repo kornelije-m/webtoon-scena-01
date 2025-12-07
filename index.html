@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="lt"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="lt"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Scena 01</title>
 <style>
   html,body{margin:0;padding:0;background:#111}
@@ -10,14 +10,21 @@
 <body>
 <div class="wrap" id="w"></div>
 <script>
-  const parts = ["001.png","002.png","003.png","004.png"];
   const w = document.getElementById('w');
-  for (const src of parts){
-    const i = new Image();
-    i.decoding = "async";
-    i.loading  = "lazy";
-    i.src = src;
-    w.appendChild(i);
+  const basePath = "";
+  const ext = ".png";     
+  const pad = 3;         
+  const start = 1;     
+
+  function load(n){
+    const name = basePath + String(n).padStart(pad,'0') + ext;
+    const img = new Image();
+    img.decoding = "async";
+    img.loading = "lazy";
+    img.onload = () => { w.appendChild(img); load(n+1); };
+    img.onerror = () => {}; 
+    img.src = name;
   }
+  load(start);
 </script>
 </body></html>
